@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 映射文件配置：引入约束dtd文件 跟标签：hibernate-mapping -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+				<class name="com.itcast.entity.Customer" table="t_customer">
+						<id name="cid" column="cid">
+							<generator class="native"></generator>
+						</id>
+						<property name="custName" column="custName"></property>
+						<property name="custLevel" column="custLevel"></property>
+						<property name="custSource" column="custSource"></property>
+						<property name="custPhone" column="custPhone"></property>
+						<property name="custMobile" column="custMobile"></property>
+				<!-- 在客户文件中，表示所有联系人  使用set标签
+				set标签里面有name属性，属性值卸载客户实体类里面表示联系人的set集合名称
+				cascade="save_update":级联保存
+				inverse="false":默认不放弃关系维护 true：表示放弃关系维护
+				-->
+				<set name="setLinkMen" cascade="save-update,delete" inverse="true">
+							<!--一对多表示 需要有外键 ：hibernate机制 ：默认双向维护外键，双方都要配置外键  column:外键名称-->
+					<key column="clid"></key>
+							<!-- 客户所有的联系人：class里面写联系人实体类的全路径 -->
+					<one-to-many class="com.itcast.entity.LinkMen"/>
+				</set>
+				</class>
+</hibernate-mapping>

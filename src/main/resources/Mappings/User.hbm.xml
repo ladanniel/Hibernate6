@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 映射文件配置：引入约束dtd文件 跟标签：hibernate-mapping -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+				<class name="com.itcast.many_to_many.User" table="t_user">
+						<id name="user_id" column="user_id">
+							<generator class="native"></generator>
+						</id>
+						<property name="user_name" column="user_name"></property>
+						<property name="user_password" column="user_password"></property>
+				<!-- 在用户里表示所有角色，使用set标签  name属性：角色set集合的名称 table属性：第三张表的名称 -->
+				<set name="setRole" table="user_role" cascade="save-update,delete" >
+				<!-- key标签里配置： 当前映射文件User在第三张表中的外键名称 -->
+					<key column="userid"></key>
+					<!-- class :角色实体类全路径 column：角色在第三张表外键名称 -->
+					<many-to-many class="com.itcast.many_to_many.Role" column="roleid"></many-to-many>
+				</set>
+				</class>
+</hibernate-mapping>
